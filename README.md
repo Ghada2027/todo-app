@@ -1,16 +1,37 @@
-# React + Vite
+# Min Todo-app
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 1. Varför är .map() ett löpande band?
 
-Currently, two official plugins are available:
+Jag pekar på koden:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+{todos.map(function (todo) {
+  return <li key={todo}>{todo}</li>;
+})}
 
-## React Compiler
+I UI skapas en <li> för varje todo i arrayen. När jag lägger till en ny todo visas den automatiskt som en ny rad.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+.map() går igenom varje element och returnerar en ny array. Här blir varje todo till en JSX-rad. Utan .map() måste jag skriva varje <li> manuellt.
 
-## Expanding the ESLint configuration
+## 2. Varför är .filter() en sil och inte en kniv?
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Jag pekar på koden:
+
+const kvar = todos.filter(function (todo) {
+  return todo !== textToRemove;
+});
+setTodos(kvar);
+
+När jag klickar på Ta bort försvinner den valda todo från UI och Antal uppgifter uppdateras.
+
+.filter() skapar en ny array med de element som klarar villkoret. splice() ändrar den gamla arrayen direkt. Därför använder vi .filter() i stället för splice() på state.
+
+## 3. Vad gör key och vad är den inte?
+
+Jag pekar på koden:
+
+return <li key={todo}>{todo}</li>;
+
+key är ett spårnings ID som React använder för att kunna matcha rätt rad när listan ändras. key är inte synlig text som användaren läser.
+
+Med key försvinner Reacts varning om att listans barn saknar en unik key.
+
