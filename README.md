@@ -35,3 +35,6 @@ key är ett spårnings ID som React använder för att kunna matcha rätt rad n�
 
 Med key försvinner Reacts varning om att listans barn saknar en unik key.
 
+
+### Sök filtrerar UI — den muterar inte state-listan.
+

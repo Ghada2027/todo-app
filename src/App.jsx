@@ -44,24 +44,29 @@ function App() {
 
 
         <ul>
-      {todos.map(function (todo) {
+          {todos.filter(function (todo) {
+        return todo
+          .toLowerCase()
+          .includes(draft.toLowerCase());
+      })
+      .map(function (todo) {
         return (
-      <li key={todo}> {todo}{" "}
-        <button
-      type="button"
-      onClick={function () {
-        handleRemove(todo);
-      }}
-    >
-      Ta bort
-    </button>
-  </li>
-);
-      })}
+          <li key={todo}>
+            {todo}{" "}
+            <button
+              type="button"
+              onClick={function () {
+                handleRemove(todo);
+              }}
+            >
+              Ta bort
+            </button>
+          </li>
+         );
+          })}
       </ul>
-    
     </main>
-  );
+  )
 }
-
-export default App;
+  
+  export default App;
