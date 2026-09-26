@@ -2,10 +2,10 @@ import { useState } from "react";
 
 function App() {
   const [todos, setTodos] = useState([
-    "Lära useState",
-    "Se re-render",
-    "Ta helg kl 16",
-  ]);
+  { id: 1, text: "Ring kund" },
+  { id: 2, text: "Ring kund" },
+]);
+
   const [draft, setDraft] = useState("");
 
   function handleChange(e) {
@@ -15,13 +15,13 @@ function App() {
   function handleAdd() {
     const text = draft.trim();
     if (text === "") return;
-    setTodos([...todos, text]);
+    setTodos([...todos,{ id: Date.now(), text: text }]);
     setDraft("");
   }
 
-  function handleRemove(textToRemove) {
+  function handleRemove(idToRemove) {
   const kvar = todos.filter(function (todo) {
-    return todo !== textToRemove;
+    return todo.id !== idToRemove;
   });
   setTodos(kvar);
 }
@@ -45,18 +45,17 @@ function App() {
 
         <ul>
           {todos.filter(function (todo) {
-        return todo
-          .toLowerCase()
+        return todo.text.toLowerCase()
           .includes(draft.toLowerCase());
       })
       .map(function (todo) {
         return (
-          <li key={todo}>
-            {todo}{" "}
+          <li key={todo.id}>
+            {todo.text}{" "}
             <button
               type="button"
               onClick={function () {
-                handleRemove(todo);
+                handleRemove(todo.id);
               }}
             >
               Ta bort
